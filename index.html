@@ -14,6 +14,7 @@
         tripped an alarm. In no time at all, the police will be all over the place. Can you get into the vault
         before they arrive?
     </div>
+    <div id = encouragement></div>
     <div id = clock></div>
     <button id = guess onclick="estimate()">Take a wise guess!</button>
 
@@ -28,22 +29,27 @@
         console.log(localStorage.getItem("code")); //generates the answer
 
         localStorage.setItem("guessCount", 7);
-        console.log(localStorage.getItem("guessCount"));
         var time = document.getElementById("clock");
         time.innerHTML = "Guesses left until the police arrives: " + localStorage.getItem("guessCount");
         document.body.appendChild(time); //clock code
         function estimate () {
-            let userGuess = prompt("Guess a number.");
-            if (userGuess > parseInt(localStorage.getItem("guessCount"))) {
-                console.log("Lower!");
-            } else if (userGuess < parseInt(localStorage.getItem("guessCount"))) {
-                console.log("Higher!");
+            if (parseInt(localStorage.getItem("guessCount")) <= 0) {
+                time.innerHTML = "Sorry, but you are out of guesses! The police got you and now you will rot in jail forever. Eventually one of the prsioners will shame you and kill you. Sucks." +
+                 " The correct answer is: " + localStorage.getItem("code");
+                document.body.appendChild(time); //clock code
             } else {
-                console.log("Nailed it!");
+                let userGuess = prompt("Guess a number.");
+                if (userGuess > parseInt(localStorage.getItem("guessCount"))) {
+                    console.log("Lower!");
+                } else if (userGuess < parseInt(localStorage.getItem("guessCount"))) {
+                    console.log("Higher!");
+                } else {
+                    console.log("Nailed it!");
+                }
+                localStorage.setItem("guessCount", localStorage.getItem("guessCount")-1);
+                time.innerHTML = "Guesses left until the police arrives: " + localStorage.getItem("guessCount");
+                document.body.appendChild(time); //changes guesses left in clock   
             }
-            localStorage.setItem("guessCount", localStorage.getItem("guessCount")-1);
-            time.innerHTML = "Guesses left until the police arrives: " + localStorage.getItem("guessCount");
-            document.body.appendChild(time); //changes guesses left in clock
         }
     </script>
 </body>
