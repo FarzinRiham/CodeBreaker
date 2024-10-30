@@ -6,11 +6,45 @@
     <title>Code Breaker Project</title>
 </head>
 <body>
+    <h1>Code Breaker</h1>
+    <h2>Guess the code or face the law!</h2>
     <div>
         As an international sneak thief, you break into vaults all the time. Riddling out a simple 3 digit
-code is child's play for you. But you must be getting sloppy in your old age because you've
-tripped an alarm. In no time at all, the police will be all over the place. Can you get into the vault
-before they arrive?
+        code is child's play for you. But you must be getting sloppy in your old age because you've
+        tripped an alarm. In no time at all, the police will be all over the place. Can you get into the vault
+        before they arrive?
     </div>
+    <div id = clock></div>
+    <button id = guess onclick="estimate()">Take a wise guess!</button>
+
+    <script>
+        let int1 = Math.floor(Math.random() * 10);
+        let int2 = Math.floor(Math.random() * 10);
+        let int3 = Math.floor(Math.random() * 10);
+
+        let answer =  int1 + "" + int2 + "" + int3;
+
+        localStorage.setItem("code", answer);
+        console.log(localStorage.getItem("code")); //generates the answer
+
+        localStorage.setItem("guessCount", 7);
+        console.log(localStorage.getItem("guessCount"));
+        var time = document.getElementById("clock");
+        time.innerHTML = "Guesses left until the police arrives: " + localStorage.getItem("guessCount");
+        document.body.appendChild(time); //clock code
+        function estimate () {
+            let userGuess = prompt("Guess a number.");
+            if (userGuess > parseInt(localStorage.getItem("guessCount"))) {
+                console.log("Lower!");
+            } else if (userGuess < parseInt(localStorage.getItem("guessCount"))) {
+                console.log("Higher!");
+            } else {
+                console.log("Nailed it!");
+            }
+            localStorage.setItem("guessCount", localStorage.getItem("guessCount")-1);
+            time.innerHTML = "Guesses left until the police arrives: " + localStorage.getItem("guessCount");
+            document.body.appendChild(time); //changes guesses left in clock
+        }
+    </script>
 </body>
 </html>
