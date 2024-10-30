@@ -32,6 +32,10 @@
         var time = document.getElementById("clock");
         time.innerHTML = "Guesses left until the police arrives: " + localStorage.getItem("guessCount");
         document.body.appendChild(time); //clock code
+
+        var text = document.getElementById("encouragement");
+        text.innerHTML = "Press the button to make a guess."
+        document.body.appendChild(text);
         function estimate () {
             if (parseInt(localStorage.getItem("guessCount")) <= 0) {
                 time.innerHTML = "Sorry, but you are out of guesses! The police got you and now you will rot in jail forever. Eventually one of the prsioners will shame you and kill you. Sucks." +
@@ -41,10 +45,16 @@
                 let userGuess = prompt("Guess a number.");
                 if (userGuess > parseInt(localStorage.getItem("guessCount"))) {
                     console.log("Lower!");
+                    text.innerHTML = "You're guess was " + userGuess + ". Guess lower!";
+                    document.body.appendChild(text);
                 } else if (userGuess < parseInt(localStorage.getItem("guessCount"))) {
                     console.log("Higher!");
-                } else {
+                    text.innerHTML = "You're guess was " + userGuess + ". Guess higher!";
+                    document.body.appendChild(text);
+                } else if (userGuess == parseInt(localStorage.getItem("guessCount"))) {
                     console.log("Nailed it!");
+                    text.innerHTML = "You're guess was " + userGuess + ". That is the correct code! Congradulations!!!";
+                    document.body.appendChild(text);
                 }
                 localStorage.setItem("guessCount", localStorage.getItem("guessCount")-1);
                 time.innerHTML = "Guesses left until the police arrives: " + localStorage.getItem("guessCount");
